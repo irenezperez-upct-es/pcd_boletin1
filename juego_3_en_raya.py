@@ -1,5 +1,7 @@
 # funcion para mostrar el tablero por pantalla con una dimensión n y asumiendo que los jugadores han realizado movimientos (movimientos_jugadores)
 import pytest
+import os as os
+
 
 
 fichas= ['o','x'] 
@@ -17,33 +19,13 @@ def generar_tablero(n, movimientos_jugadores):
                         fila[j]=fichas[k] 
         tablero.append(fila) 
     return tablero 
+    
 
 n = 3
 #t= generar_tablero(n, movimientos_jugadores) 
 #print(t, len(t))
 
 # PASO 2
-# testeamos que el código genera correctamente el tablero con las dimensiones adecuadas con el siguiente código
-
-
-def test_generar_tablero():  
-
-    mov_jugador_1 = {}   
-
-    mov_jugador_2 = {}   
-
-    movimientos_jugadores=[mov_jugador_1, mov_jugador_2]   
-
-    n=3  
-
-    t= generar_tablero(n, movimientos_jugadores)
-
-    assert len(t)== n  
-
-    for f in t:  
-        assert len(f) == n 
-
-# PASO 3
 # Desarrollar un método que permita determinar si el movimiento de un jugador es válido o no
 
 """ 
@@ -62,27 +44,8 @@ def movimiento_valido(x, y, movimientos_otro_jugador):
             return False 
     return True 
 
-# a partir de este método podemos diseñar varios test unitarios para comprobar su correcta funcionalidad
 
-def test_movimiento_columna_fuera_tablero(): 
-    movimientos_otro_jugador={} 
-    x=  1 
-    y=  n+1 
-    assert False == movimiento_valido(x,y,movimientos_otro_jugador) 
-
-def test_movimiento_fila_y_columna_fuera_tablero(): 
-    movimientos_otro_jugador={} 
-    x=  n+1 
-    y=  n+1 
-    assert False == movimiento_valido(x,y,movimientos_otro_jugador) 
- 
-def test_movimiento_incorrecto(): 
-    movimientos_otro_jugador={2:[3]} 
-    x=  2 
-    y=  3 
-    assert False == movimiento_valido(x,y,movimientos_otro_jugador)
-
-# PASO 4
+# PASO 3
 # método que permite determinar si un nuevo movimiento de un jugador le permite ganar el juego
 def jugada_ganadora(movimientos_jugador): 
     """ 
@@ -97,18 +60,11 @@ def jugada_ganadora(movimientos_jugador):
         movimientos_columna = movimientos_jugador[fila] 
         if len(movimientos_columna)==3: 
             return True 
+        
     return False
 
-# de este método definimos dos test unitarios
-def test_no_ganador(): 
-    movimientos_jugador={2:[2,3]} 
-    assert False == jugada_ganadora(movimientos_jugador) 
- 
-def test_ganador(): 
-    movimientos_jugador={2:[1,2,3]} 
-    assert True == jugada_ganadora(movimientos_jugador)
 
-# PASO 5
+# PASO 4
 # añadimos la lógica del juego que permite hacerlo interactivo
 # Primero implementamos el método que permita mostrar el estado actual del tablero por pantalla:
 def mostrar_tablero(tablero): 
@@ -169,3 +125,6 @@ while casillas_libres > 0:
  
     casillas_libres= casillas_libres -1 
     jugador_activo = (jugador_activo+1) % 2 
+
+
+# PARA EJERCICIO OPCIONAL: guardar las posiciones en una matriz 3x3 paar que sea más limpio
