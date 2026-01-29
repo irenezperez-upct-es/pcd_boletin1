@@ -1,4 +1,4 @@
-from juego_3_en_raya_bol2 import mostrar_tablero, movimiento_valido
+from juego_3_en_raya_bol2 import mostrar_tablero, movimiento_valido, jugada_ganadora
 import pytest
 
 # una fixture pertenece al entorno de pruebas, no a la lógica del programa. Sollo los tests tienen que saber de pytest
@@ -58,3 +58,17 @@ def test_movimiento_incorrecto(tablero_dimension, movimientos_ocupados):
     x = 2 
     y = 3 
     assert not movimiento_valido(tablero_dimension, x, y, movimientos_ocupados) 
+
+@pytest.fixture 
+def movimientos_no_ganador(): 
+        return {2: [2, 3]} 
+
+@pytest.fixture 
+def movimientos_ganador(): 
+    return {2: [1, 2, 3]} 
+
+def test_no_ganador(movimientos_no_ganador): 
+    assert not jugada_ganadora(movimientos_no_ganador) 
+
+def test_ganador(movimientos_ganador): 
+    assert jugada_ganadora(movimientos_ganador) 
